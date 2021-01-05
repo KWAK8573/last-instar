@@ -15,38 +15,76 @@
             <div class="col-md-7 blog-main">
                 <div class="container">
                    {% for post in posts.all %}
-                    <div class="card-deck mb-3">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="btn-group" style="float: left;">
-                            <a class="my-0 font-weight-normal" href="#"><span class="writer_name">{{ post.create_user }}</span></a>
-                            </div>
-                            <div class="btn-group" style="float: right;">
-                            <span class="hidden" id="control_id">
-                    #★          <a href="{% url 'update' post.id %}"><img src="/static/update.png" alt="update" style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
-                    #★          <a href="{% url 'delete' post.id %}" onclick="return confirm('정말 삭제하시겠습니까?')"><img src="/static/delete.png" alt="delete" style="width: 1.5rem; height:1.5rem;"></a>
-                            </span>
-                            </div>
-                        </div>
-                        {% if post.create_img %}
-                        <div class="text-center">
+<div class="card-deck mb-3">
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            <div class="btn-group" style="float: left;">
+                <a class="my-0 font-weight-normal" href="#"><span class="writer_name">{{ post.create_user }}</span></a>
+            </div>
+            <div class="btn-group" style="float: right;">
+                <span class="hidden" id="control_id">
+                    <a href="{% url 'update' post.id %}"><img src="/static/update.png" alt="update"
+                            style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
+                    <a href="{% url 'delete' post.id %}" onclick="return confirm('정말 삭제하시겠습니까?')"><img
+                            src="/static/delete.png" alt="delete" style="width: 1.5rem; height:1.5rem;"></a>
+                </span>
+            </div>
+        </div>
+                    {% if post.create_img %}
+                    <div class="text-center">
                         <img src="{{post.create_img.url}}" class="rounded" alt="..." width="585.5dp" height="585.5dp">
-                        </div>
-                        {% else %}
-                        <a>no</a>
-                        {% endif %}
-                        <div class="card-body">
-                        <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동" style="width: 2rem; height:2rem;"></a>
-                        <div class="group">
-                        <a class="my-0 font-weight-normal" href="#">{{ post.create_user }}</a>
-                        <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}</a>
+                    </div>
+                    {% else %}
+                    <a>no</a>
+                    {% endif %}
+                <div class="card-body">
+
+                <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동"
+                        style="width: 2rem; height:2rem;"></a>
+                <br>
+                <small class="text-muted">{{post.comments.count}} comment</small>
+                <hr>
+                <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}<small
+                        class="text-muted">&nbsp;&nbsp;{{ post.create_date }}</small></a>
+                <hr>
+
+            <div class="group">
+
+                            # .. new
+
+                    {% for comment in post.comments.all %}
+                    <a class="card-text" href="#"><span class="comment_writer_name">{{comment.comment_user}}</span></a>
+                    <small class="text-muted">{{comment.comment_date}}</small>
+                    <br>
+                    <a class="card-text">{{comment.comment_text}}
+                        <span class="control hidden" id="control_id1{{ forloop.counter0 }}">
+                            <form action="{% url 'c_delete' post.pk comment.pk %}" method="POST" style="display:inline-block">
+                                {% csrf_token %}
+                                <input type="hidden" name="app_url" id="app_url" value="{{app_url}}" />
+                                <button type="submit">삭제</button>
+                            </form>
+                        </span>
                         <br>
-                            <small class="text-muted">{{ post.create_date }}</small>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                    {% endfor %}
+                        {% endfor %}
+                        <form action="{% url 'c_post' post.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-sm" name="comment_text" id="comment_text"
+                                    placeholder="댓글 달기 ..." style="display:inline-block">
+                                <input type="hidden" name="app_url" id="app_url" value="{{app_url}}" />
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text" id="inputGroup-sizing-sm" type="submit">게시</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                </aside>
+            
+        </div>
+    </div>
+</div>
+{% endfor %}
                 </div>
             </div>
 
