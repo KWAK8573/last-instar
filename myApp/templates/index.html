@@ -1,2 +1,124 @@
-<h1> index </h1>
+{% extends 'base.html' %}
+{% block content %}
 
+<head>
+    <style>
+        .hidden {
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <main role="main" class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 blog-main">
+                <div class="container">
+                    {% for post in posts.all %}
+                    <div class="card-deck mb-3">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+
+                                <!-- 접속자와 글쓴이가 같으면 -->
+                                <div class="btn-group" style="float: left;">
+                                    <a class="my-0 font-weight-normal" href="#"><span
+                                            class="writer_name">{{ post.create_user }}</span></a>
+                                </div>
+
+                                <!-- 점속자와 글쓴이가 같지 않으면 사라짐 -->
+                                <div class="btn-group" style="float: right;">
+                                    <span class="hidden" id="control_id">
+                                        <a href="#"><img src="/static/update.png" alt="update"
+                                                style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
+                                        <a href="#"><img src="/static/delete.png" alt="delete"
+                                                style="width: 1.5rem; height:1.5rem;"></a>
+                                    </span>
+                                </div>
+
+                            </div>
+                            {% if post.create_img %}
+                            <div class="text-center">
+                                <img src="{{post.create_img.url}}" class="rounded" alt="..." width="585.5dp"
+                                    height="585.5dp">
+                            </div>
+                            {% else %}
+                            <a>no</a>
+                            {% endif %}
+                            <div class="card-body">
+
+                                <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동"
+                                        style="width: 2rem; height:2rem;"></a>
+                                <div class="group">
+                                    <a class="my-0 font-weight-normal" href="#">{{ post.create_user }}</a>
+                                    <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}</a>
+                                    <br>
+                                    <small class="text-muted">{{ post.create_date }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <aside class="col-md-3 blog-sidebar">
+                <div class="card mb-3 bg-light rounded" style="max-width: 540px;" bg-light rounded>
+                    <div class="row no-gutters">
+                        <a></a>
+                        <div class="col-md-5 d-flex align-items-center d-flex justify-content-center">
+                            <img src="{{ profile_pic }}" alt="..." class="rounded-circle" width="60" height="60">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <a><span id="user_name">{{user.username}}</span></a>
+                                <br>
+                                <a href="#">My Profile</a>
+                                <br>
+                                <a href="{% url 'post' %}">New Post</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                    <strong>{{ message.message }}</strong>
+                    {% endfor %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+                <div class="p-3">
+                    <h4 class="font-italic">Producer</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/KWAK8573/last-instar">GitHub</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ol>
+                    <footer class="my-2 pt-2 text-muted text-center text-small">
+                        <p class="mb-1">&copy; 2020-2021 </p>
+                    </footer>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $("#user_name").text()
+        $(".writer_name").text()
+
+        $(".writer_name")
+        $(".writer_name")[0].innerHTML
+
+        for (i = 0; i < $(".writer_name").length; i++) {
+            if ($("#user_name").text() == $(".writer_name")[i].innerHTML) {
+                $("#control_id").removeClass("hidden");
+            }
+        }
+    </script>
+
+</body>
+{% endblock %}

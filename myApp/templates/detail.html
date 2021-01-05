@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    {% if messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+        <strong>{{ message.message }}</strong>
+        {% endfor %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+</head>
+
+<body>
+    <main role="main" class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-7 blog-main">
+                <div class="container">
+                    <div class="card-deck mb-3">
+                        <div class="card mb-4 shadow-sm">
+                            {% if post.create_img %}
+                            <div class="text-center">
+                                <img src="{{post.create_img.url}}" class="rounded" alt="..." width="585.5dp"
+                                    height="585.5dp">
+                            </div>
+                            {% else %}
+                            <a>no</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-md-3 blog-sidebar">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a class="my-0 font-weight-normal" href="#"><span
+                                    class="writer_name">{{ post.create_user }}</span></a>
+                        </div>
+                        <div class="btn-group">
+                            <span class="hidden" id="control_id">
+                                <a href="#"><img src="/static/update.png" alt="update"
+                                        style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
+                                <a href="#"><img src="/static/delete.png" alt="delete"
+                                        style="width: 1.5rem; height:1.5rem;"></a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동"
+                            style="width: 2rem; height:2rem;"></a>
+                    <br>
+                    <hr>
+                    <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}<small
+                            class="text-muted">&nbsp;&nbsp;{{ post.create_date }}</small></a>
+                    <hr>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $("#user_name").text()
+        $(".writer_name").text()
+
+        if ($("#user_name").text() == $(".writer_name").text()) {
+            $("#control_id").removeClass("hidden")
+        }
+
+        $(".comment_writer_name")
+        $(".comment_writer_name")[0].innerHTML
+
+        for (i = 0; i < $(".comment_writer_name").length; i++) {
+            if ($("#user_name").text() == $(".comment_writer_name")[i].innerHTML) {
+                $("#control_id1" + i).removeClass("hidden");
+            }
+        }
+    </script>
+
+</body>
+{% endblock %}
