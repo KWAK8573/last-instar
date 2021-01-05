@@ -44,10 +44,8 @@
                         </div>
                         <div class="btn-group">
                             <span class="hidden" id="control_id">
-                                <a href="#"><img src="/static/update.png" alt="update"
-                                        style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
-                                <a href="#"><img src="/static/delete.png" alt="delete"
-                                        style="width: 1.5rem; height:1.5rem;"></a>
+            #★                    <a href="{% url 'update' post.id %}"><img src="/static/update.png" alt="update" style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
+            #★                    <a href="{% url 'delete' post.id %}" onclick="return confirm('정말 삭제하시겠습니까?')"><img src="/static/delete.png" alt="delete" style="width: 1.5rem; height:1.5rem;"></a>
                             </span>
                         </div>
                     </div>
@@ -58,7 +56,7 @@
                             style="width: 2rem; height:2rem;"></a>
                     <br>
                     <hr>
-                    <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}<small
+                    <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr  }}<small
                             class="text-muted">&nbsp;&nbsp;{{ post.create_date }}</small></a>
                     <hr>
                 </div>

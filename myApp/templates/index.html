@@ -14,48 +14,37 @@
         <div class="row justify-content-center">
             <div class="col-md-7 blog-main">
                 <div class="container">
-                    {% for post in posts.all %}
+                   {% for post in posts.all %}
                     <div class="card-deck mb-3">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header">
-
-                                <!-- 접속자와 글쓴이가 같으면 -->
-                                <div class="btn-group" style="float: left;">
-                                    <a class="my-0 font-weight-normal" href="#"><span
-                                            class="writer_name">{{ post.create_user }}</span></a>
-                                </div>
-
-                                <!-- 점속자와 글쓴이가 같지 않으면 사라짐 -->
-                                <div class="btn-group" style="float: right;">
-                                    <span class="hidden" id="control_id">
-                                        <a href="#"><img src="/static/update.png" alt="update"
-                                                style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
-                                        <a href="#"><img src="/static/delete.png" alt="delete"
-                                                style="width: 1.5rem; height:1.5rem;"></a>
-                                    </span>
-                                </div>
-
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <div class="btn-group" style="float: left;">
+                            <a class="my-0 font-weight-normal" href="#"><span class="writer_name">{{ post.create_user }}</span></a>
                             </div>
-                            {% if post.create_img %}
-                            <div class="text-center">
-                                <img src="{{post.create_img.url}}" class="rounded" alt="..." width="585.5dp"
-                                    height="585.5dp">
-                            </div>
-                            {% else %}
-                            <a>no</a>
-                            {% endif %}
-                            <div class="card-body">
-
-                                <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동"
-                                        style="width: 2rem; height:2rem;"></a>
-                                <div class="group">
-                                    <a class="my-0 font-weight-normal" href="#">{{ post.create_user }}</a>
-                                    <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}</a>
-                                    <br>
-                                    <small class="text-muted">{{ post.create_date }}</small>
-                                </div>
+                            <div class="btn-group" style="float: right;">
+                            <span class="hidden" id="control_id">
+                    #★          <a href="{% url 'update' post.id %}"><img src="/static/update.png" alt="update" style="width: 1.5rem; height:1.5rem;">&nbsp;</a>
+                    #★          <a href="{% url 'delete' post.id %}" onclick="return confirm('정말 삭제하시겠습니까?')"><img src="/static/delete.png" alt="delete" style="width: 1.5rem; height:1.5rem;"></a>
+                            </span>
                             </div>
                         </div>
+                        {% if post.create_img %}
+                        <div class="text-center">
+                        <img src="{{post.create_img.url}}" class="rounded" alt="..." width="585.5dp" height="585.5dp">
+                        </div>
+                        {% else %}
+                        <a>no</a>
+                        {% endif %}
+                        <div class="card-body">
+                        <a href="{% url 'detail' post.id %}"><img src="/static/detail.png" alt="detail 이동" style="width: 2rem; height:2rem;"></a>
+                        <div class="group">
+                        <a class="my-0 font-weight-normal" href="#">{{ post.create_user }}</a>
+                        <a class="card-title pricing-card-title">{{ post|safe|linebreaksbr }}</a>
+                        <br>
+                            <small class="text-muted">{{ post.create_date }}</small>
+                        </div>
+                        </div>
+                    </div>
                     </div>
                     {% endfor %}
                 </div>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+    <form method="POST" action="" enctype="multipart/form-data" id="form1" runat="server">
+        {%csrf_token%}
+        <main role="main" class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 blog-main">
+                    <div class="container">
+                        <div class="form-group">
+                            <img id="blah" src="{{post.create_img.url}}" alt="your image" width="585.5dp"
+                                height="585.5dp" />
+                        </div>
+                    </div>
+                </div>
+                <aside class="col-md-3 blog-sidebar">
+                    <div class="form-group">
+                        {{form.create_img}}
+                        {{form.main_text}}
+                    </div>
+                    <div style="float: right;">
+                        <input class="btn btn-dark" type="submit" value="post">
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </form>
+</body>
+{% endblock %}

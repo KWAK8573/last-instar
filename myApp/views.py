@@ -44,3 +44,45 @@ def post(request):
 def detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'detail.html', {'post': post})
+
+
+def update(request, post_id):
+    post = Post.objects.get(id = post_id)
+    conn_profile = User.objects.get(username = request.user.get_username())
+        
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+            if conn_profile == post.create_user:
+                post = form.save(commit=False)
+                post.save()
+
+                context = {'post': post, 'form': form}
+                content = request.POST.get('content')
+                        
+                messages.info(request, '수정 완료')
+                return render(request, 'detail.html', context=context)
+                
+            else:
+                messages.info(request, '수정할 수 없습니다.')
+                return render(request, 'detail.html', {'post': post})
+    else:
+        if conn_profile == post.create_user:
+            form = PostForm(instance = post)
+            return render(request, 'update.html', {'post': post, 'form': form})
+        else:
+            messages.info(request, '수정할 수 없습니다.')
+            return redirect(reverse('index'), post_id)
+            
+def delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    conn_profile = User.objects.get(username = request.user.get_username())
+
+    if conn_profile == post.create_user:
+        post.delete()
+        return redirect(reverse('index'))
+    else:
+        messages.info(request, '삭제할 수 없습니다.')
+        return render(request, 'detail.html', {'post': post})
